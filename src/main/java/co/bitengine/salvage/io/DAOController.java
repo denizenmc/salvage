@@ -1,6 +1,8 @@
 package co.bitengine.salvage.io;
 
+import co.bitengine.salvage.io.files.FileLogDAO;
 import co.bitengine.salvage.io.files.FileRecipeDAO;
+import co.bitengine.salvage.logs.SalvageLog;
 import co.bitengine.salvage.models.Recipe;
 
 import java.util.Optional;
@@ -12,6 +14,13 @@ public class DAOController {
     public Optional<IDAO<Recipe>> getRecipeDAO() {
         if (source == IOSource.FILE) {
             return Optional.of(new FileRecipeDAO());
+        }
+        return Optional.empty();
+    }
+
+    public Optional<IDAO<SalvageLog>> getLogDAO() {
+        if (source == IOSource.FILE) {
+            return Optional.of(new FileLogDAO());
         }
         return Optional.empty();
     }

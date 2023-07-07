@@ -1,5 +1,7 @@
 package co.bitengine.salvage.logs;
 
+import java.util.logging.Level;
+
 public class SevereSalvageLog extends SalvageLog {
 
     public SevereSalvageLog(String text) {
@@ -8,6 +10,11 @@ public class SevereSalvageLog extends SalvageLog {
 
     @Override
     public String getText() {
-        return null;
+        return "[SEVERE] " + text;
+    }
+
+    @Override
+    Level getLevel() {
+        return Level.SEVERE;
     }
 }

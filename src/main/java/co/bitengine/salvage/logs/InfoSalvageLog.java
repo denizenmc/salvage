@@ -1,5 +1,9 @@
 package co.bitengine.salvage.logs;
 
+import org.bukkit.ChatColor;
+
+import java.util.logging.Level;
+
 public class InfoSalvageLog extends SalvageLog {
 
     public InfoSalvageLog(String text) {
@@ -8,6 +12,11 @@ public class InfoSalvageLog extends SalvageLog {
 
     @Override
     public String getText() {
-        return null;
+        return "[INFO] " + text;
+    }
+
+    @Override
+    Level getLevel() {
+        return Level.INFO;
     }
 }
