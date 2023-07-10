@@ -7,18 +7,22 @@ import java.util.UUID;
 public class Recipe {
     private final UUID id;
     private String name, permission;
-    private final List<SalvageableItem> inputs;
+    private final List<SalvageItem> inputs;
+    private final LootTable output;
+
     public Recipe() {
         id = UUID.randomUUID();
         name = "New Recipe";
         permission = null;
         inputs = new ArrayList<>();
+        output = new LootTable();
     }
-    public Recipe(UUID id, String name, String permission, List<SalvageableItem> inputs) {
+    public Recipe(UUID id, String name, String permission, List<SalvageItem> inputs, LootTable output) {
         this.id = id;
         this.name = name;
         this.permission = permission;
         this.inputs = inputs;
+        this.output = output;
     }
 
     public UUID getId() {
@@ -41,5 +45,14 @@ public class Recipe {
         this.permission = permission;
     }
 
-    public List<SalvageableItem> getInputs() { return inputs; }
+    public List<SalvageItem> getInputs() { return inputs; }
+
+    public LootTable getOutput() {
+        return output;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Recipe && ((Recipe) o).getId().equals(id);
+    }
 }
