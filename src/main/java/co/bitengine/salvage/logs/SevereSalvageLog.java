@@ -10,7 +10,12 @@ public class SevereSalvageLog extends SalvageLog {
 
     @Override
     public String getText() {
-        return "[SEVERE] " + text;
+        return "[Salvage][SEVERE] " + text;
+    }
+
+    @Override
+    String getConsoleText() {
+        return "[Salvage] " + text;
     }
 
     @Override

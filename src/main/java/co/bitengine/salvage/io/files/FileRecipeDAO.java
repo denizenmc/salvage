@@ -2,7 +2,7 @@ package co.bitengine.salvage.io.files;
 
 import co.bitengine.salvage.io.IDAO;
 import co.bitengine.salvage.models.Recipe;
-import co.bitengine.salvage.models.SalvageQuery;
+import co.bitengine.salvage.models.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public class FileRecipeDAO implements IDAO<Recipe> {
     }
 
     @Override
-    public List<Recipe> getAll(SalvageQuery query) {
+    public List<Recipe> getAll(Query query) {
         return null;
     }
 

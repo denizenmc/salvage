@@ -1,6 +1,6 @@
 package co.bitengine.salvage.io;
 
-import co.bitengine.salvage.models.SalvageQuery;
+import co.bitengine.salvage.models.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ public interface IDAO<T> {
     Optional<T> get(UUID id);
     Optional<T> get(String name);
     List<T> getAll();
-    List<T> getAll(SalvageQuery query);
+    List<T> getAll(Query query);
     void save(T t);
     void delete(T t);
 }

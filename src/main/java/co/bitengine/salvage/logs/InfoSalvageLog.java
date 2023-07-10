@@ -16,6 +16,11 @@ public class InfoSalvageLog extends SalvageLog {
     }
 
     @Override
+    String getConsoleText() {
+        return "[Salvage] " + text;
+    }
+
+    @Override
     Level getLevel() {
         return Level.INFO;
     }

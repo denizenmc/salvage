@@ -8,5 +8,6 @@ public abstract class SalvageLog {
         this.text = text;
     }
     abstract String getText();
+    abstract String getConsoleText();
     abstract Level getLevel();
 }

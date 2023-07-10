@@ -14,6 +14,11 @@ public class WarningSalvageLog extends SalvageLog {
     }
 
     @Override
+    String getConsoleText() {
+        return "[Salvage] " + text;
+    }
+
+    @Override
     Level getLevel() {
         return Level.WARNING;
     }
