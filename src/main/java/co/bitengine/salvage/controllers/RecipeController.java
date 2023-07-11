@@ -5,6 +5,8 @@ import co.bitengine.salvage.io.IDAO;
 import co.bitengine.salvage.logs.SevereSalvageLog;
 import co.bitengine.salvage.models.Loot;
 import co.bitengine.salvage.models.Recipe;
+import co.bitengine.salvage.models.RecipeQuery;
+import co.bitengine.salvage.services.QueryService;
 import co.bitengine.salvage.services.RecipeService;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,6 +24,10 @@ public class RecipeController {
 
     public List<Recipe> getCache() {
         return new ArrayList<>(cache);
+    }
+
+    public List<Recipe> getCache(String search) {
+        return QueryService.getRecipes(RecipeQuery.from(search), getCache());
     }
 
     public Optional<Recipe> get(String name) {
