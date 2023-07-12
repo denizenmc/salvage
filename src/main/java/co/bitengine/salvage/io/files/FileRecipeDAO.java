@@ -1,8 +1,10 @@
 package co.bitengine.salvage.io.files;
 
-import co.bitengine.salvage.Salvage;
 import co.bitengine.salvage.io.IDAO;
-import co.bitengine.salvage.models.*;
+import co.bitengine.salvage.models.Loot;
+import co.bitengine.salvage.models.Recipe;
+import co.bitengine.salvage.models.SalvageItem;
+import co.bitengine.salvage.models.SalvageResultRange;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -103,6 +105,7 @@ public class FileRecipeDAO implements IDAO<Recipe> {
     private List<SalvageItem> getSalvageItemsFromRecipeConfiguration(FileConfiguration configuration) {
         List<SalvageItem> items = new ArrayList<>();
         for (String input : configuration.getConfigurationSection("input").getValues(false).keySet()) {
+            if (configuration.getItemStack("input."+input+".item") == null) continue;
             ItemStack item = configuration.getItemStack("input."+input+".item");
             boolean matchDisplayName = configuration.getBoolean("input."+input+".matchDisplayName");
             List<String> lorelinesToMatch = configuration.getStringList("input."+input+".loreLinesToMatch");
@@ -114,6 +117,7 @@ public class FileRecipeDAO implements IDAO<Recipe> {
     private List<Loot> getLootTableFromRecipeConfiguration(FileConfiguration configuration) {
         List<Loot> items = new ArrayList<>();
         for (String output : configuration.getConfigurationSection("output").getValues(false).keySet()) {
+            if (configuration.getItemStack("output."+output+".item") == null) continue;
             ItemStack item = configuration.getItemStack("output."+output+".item");
             double chance = configuration.getDouble("output."+output+".chance");
             int min = configuration.getInt("output."+output+".range.min");

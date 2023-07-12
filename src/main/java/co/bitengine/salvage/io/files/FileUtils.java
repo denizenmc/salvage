@@ -11,6 +11,7 @@ import java.util.logging.Level;
 class FileUtils {
     static String RECIPE_DIRECTORY = "recipes";
     static String LOG_DIRECTORY = "logs";
+    static String PLAYER_DIRECTORY = "players";
 
     static File getFile(String path) {
         File f = Salvage.getInstance().getDataFolder();

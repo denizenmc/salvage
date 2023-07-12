@@ -18,8 +18,8 @@ public class RecipeController {
     private List<Recipe> cache;
 
     public RecipeController() {
-        cache = getAll();
         dao = getDAO();
+        cache = getAll();
     }
 
     public List<Recipe> getCache() {
@@ -51,7 +51,7 @@ public class RecipeController {
             cache.add(recipe);
         }
         if (dao == null) {
-            Salvage.getInstance().getLogController().log(new SevereSalvageLog("Failed to load recipes from IO source"), true);
+            Salvage.getInstance().getLogController().log(new SevereSalvageLog("Failed to save recipe to IO source"), true);
         } else {
             dao.save(recipe);
         }

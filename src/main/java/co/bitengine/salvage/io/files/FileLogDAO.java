@@ -2,7 +2,6 @@ package co.bitengine.salvage.io.files;
 
 import co.bitengine.salvage.io.IDAO;
 import co.bitengine.salvage.logs.SalvageLog;
-import co.bitengine.salvage.models.RecipeQuery;
 
 import java.util.List;
 import java.util.Optional;
