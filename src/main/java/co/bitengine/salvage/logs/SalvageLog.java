@@ -7,7 +7,7 @@ public abstract class SalvageLog {
     public SalvageLog(String text) {
         this.text = text;
     }
-    abstract String getText();
-    abstract String getConsoleText();
+    public abstract String getText();
+    public abstract String getConsoleText();
     abstract Level getLevel();
 }

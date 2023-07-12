@@ -24,9 +24,7 @@ public final class Salvage extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
+    public void onDisable() {}
 
     private void initControllers() {
         daoController = new DAOController(IOSource.FILE);
