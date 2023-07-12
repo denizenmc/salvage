@@ -24,6 +24,6 @@ public class LootTableService {
         return items;
     }
     public static int getQuantity(SalvageResultRange range) {
-        return new Random().nextInt(range.getMin(), range.getMax()+1);
+        return new Random().nextInt(range.getMax()-range.getMin()+1)+range.getMin();
     }
 }

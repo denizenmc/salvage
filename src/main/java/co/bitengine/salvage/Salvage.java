@@ -2,9 +2,11 @@ package co.bitengine.salvage;
 
 import co.bitengine.salvage.controllers.PlayerController;
 import co.bitengine.salvage.controllers.RecipeController;
+import co.bitengine.salvage.controllers.TestController;
 import co.bitengine.salvage.io.DAOController;
 import co.bitengine.salvage.io.IOSource;
 import co.bitengine.salvage.logs.LogController;
+import co.bitengine.salvage.logs.SevereSalvageLog;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Salvage extends JavaPlugin {
@@ -18,6 +20,7 @@ public final class Salvage extends JavaPlugin {
     public void onEnable() {
         instance = this;
         initControllers();
+        test();
     }
 
     @Override
@@ -30,6 +33,17 @@ public final class Salvage extends JavaPlugin {
         logController = new LogController();
         recipeController = new RecipeController();
         playerController = new PlayerController();
+    }
+
+    private void test() {
+        TestController testController = new TestController();
+        testController.runAllTests();
+        if (!testController.getTestResults().isEmpty()) {
+            testController.logTestResults();
+            logController.log(new SevereSalvageLog("[TESTS FAILED] This plugin version is defective. Please report to the developer"), true);
+            getServer().getPluginManager().disablePlugin(this);
+        }
+
     }
 
     public static Salvage getInstance() { return instance; }

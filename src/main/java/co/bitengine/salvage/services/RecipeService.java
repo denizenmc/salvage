@@ -15,9 +15,13 @@ public class RecipeService {
         Map<Loot, Integer> results = new HashMap<>();
         for (Recipe recipe : recipes) {
             for (ItemStack item : input) {
-                if (isRecipeInput(recipe, item)) {
-                    for (Loot loot : recipe.getOutput().getLoot()) {
-                        results.put(loot, results.containsKey(loot) ? results.get(loot)+1 : 1);
+                if (item == null) continue;
+                int count = isRecipeInput(recipe, new ItemStack(item));
+                if (count > 0) {
+                    for (int i = 0; i < count; i++) {
+                        for (Loot loot : recipe.getOutput().getLoot()) {
+                            results.put(loot, results.containsKey(loot) ? results.get(loot)+1 : 1);
+                        }
                     }
                 }
             }
@@ -29,19 +33,25 @@ public class RecipeService {
         List<ItemStack> items = new ArrayList<>();
         for (Recipe recipe : recipes) {
             for (ItemStack item : input) {
-                if (isRecipeInput(recipe, item)) {
-                    items.addAll(LootTableService.generate(recipe.getOutput()));
+                int count = isRecipeInput(recipe, item);
+                if (count > 0) {
+                    for (int i = 0; i < count; i++) items.addAll(LootTableService.generate(recipe.getOutput()));
                 }
             }
         }
         return items;
     }
 
-    public static boolean isRecipeInput(Recipe recipe, ItemStack item) {
-        if (recipe.getInputs().isEmpty()) return false;
+    public static int isRecipeInput(Recipe recipe, ItemStack item) {
+        if (recipe.getInputs().isEmpty()) return 0;
         for (SalvageItem i : new ArrayList<>(recipe.getInputs())) {
-            if (SalvageItemService.isItem(i, item)) return true;
+            if (SalvageItemService.isItem(i, item)) {
+                int count = (int)Math.floor(item.getAmount()*1.0/i.getItem().getAmount());
+                item.setAmount(item.getAmount()-count*i.getItem().getAmount());
+                return count;
+            }
         }
-        return false;
+        return 0;
     }
+
 }

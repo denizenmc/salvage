@@ -1,25 +1,28 @@
-package co.bitengine.salvage.services;
+package co.bitengine.salvage.tests;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import co.bitengine.salvage.Salvage;
+import co.bitengine.salvage.logs.SalvageLog;
+import co.bitengine.salvage.logs.SevereSalvageLog;
 import co.bitengine.salvage.models.Loot;
 import co.bitengine.salvage.models.LootTable;
 import co.bitengine.salvage.models.SalvageResultRange;
+import co.bitengine.salvage.services.LootTableService;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.junit.Before;
-import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class LootTableServiceTest implements ISalvageTest {
+    @Override
+    public List<SalvageLog> run() {
+        List<SalvageLog> logs = new ArrayList<>();
+        logs.addAll(testGenerate());
+        logs.addAll(testGetQuantity());
+        return logs;
+    }
 
-public class LootTableServiceTest {
-
-    @Test
-    public void testGenerate() {
-
+    private List<SalvageLog> testGenerate() {
         LootTable table = new LootTable();
         Loot loot1 = new Loot(new ItemStack(Material.PAPER));
         loot1.setChance(50);
@@ -56,15 +59,14 @@ public class LootTableServiceTest {
                 }
             }
         }
-        assertTrue(valid && total/1000 != 0, "Loot table generation is invalid");
+        return (!(valid && total/1000 != 0)) ? new ArrayList<>(Arrays.asList(new SevereSalvageLog("[TEST FAILED] Loot table generate"))) : new ArrayList<>();
     }
 
-    @Test
-    public void testGetQuantity() {
+    private List<SalvageLog> testGetQuantity() {
         int value1 = LootTableService.getQuantity(new SalvageResultRange(0, 10));
         int value2 = LootTableService.getQuantity(new SalvageResultRange(0, 10));
         int value3 = LootTableService.getQuantity(new SalvageResultRange(0, 10));
-        assertTrue(value1 >= 0 && value1 <= 10 && value2 >= 0 && value2 <= 10 && value3 >= 0 && value3 <= 10,
-                "Random range quantity for Loot is producing invalid values");
+        return value1 >= 0 && value1 <= 10 && value2 >= 0 && value2 <= 10 && value3 >= 0 && value3 <= 10 ?
+                new ArrayList<>() : new ArrayList<>(Arrays.asList(new SevereSalvageLog("[TEST FAILED] Loot table get quantity from range")));
     }
 }

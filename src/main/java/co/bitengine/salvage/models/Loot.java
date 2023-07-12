@@ -27,4 +27,9 @@ public class Loot {
     public SalvageResultRange getRange() {
         return range;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Loot && ((Loot) o).getItem().equals(item) && ((Loot) o).getChance() == chance;
+    }
 }

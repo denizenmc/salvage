@@ -78,6 +78,4 @@ public class RecipeController {
         return dao.getAll();
     }
 
-
-
 }
