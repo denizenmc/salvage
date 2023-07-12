@@ -51,7 +51,7 @@ public class QueryService {
             }
             if (!query.getLootTableItemTexts().isEmpty()) {
                 Set<String> found = new HashSet<>();
-                for (Loot loot : new ArrayList<>(recipe.getOutput().getLoot())) {
+                for (Loot loot : new ArrayList<>(recipe.getOutput())) {
                     if (loot.getItem().hasItemMeta()) {
                         if (loot.getItem().getItemMeta().hasDisplayName()) {
                             for (String input : query.getLootTableItemTexts()) {

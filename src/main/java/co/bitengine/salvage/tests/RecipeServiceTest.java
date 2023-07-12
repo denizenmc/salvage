@@ -42,7 +42,7 @@ public class RecipeServiceTest implements ISalvageTest {
         ItemMeta meta2 = item2.getItemMeta();
         meta2.setDisplayName(ChatColor.GRAY + "Dust");
         item2.setItemMeta(meta2);
-        recipe2.getOutput().getLoot().add(new Loot(item2));
+        recipe2.getOutput().add(new Loot(item2));
 
         recipes.add(recipe2);
 
@@ -61,7 +61,7 @@ public class RecipeServiceTest implements ISalvageTest {
         meta1.setDisplayName(ChatColor.GOLD + "Excalibur");
         item1.setItemMeta(meta1);
         recipe1.getInputs().add(new SalvageItem(item1));
-        recipe1.getOutput().getLoot().add(new Loot(item1));
+        recipe1.getOutput().add(new Loot(item1));
 
         List<Recipe> recipes = new ArrayList<>(Arrays.asList(recipe1));
 
@@ -73,7 +73,7 @@ public class RecipeServiceTest implements ISalvageTest {
         meta2.setDisplayName(ChatColor.GRAY + "Dust");
         item2.setItemMeta(meta2);
         recipe2.getInputs().add(new SalvageItem(item2));
-        recipe2.getOutput().getLoot().add(new Loot(item2));
+        recipe2.getOutput().add(new Loot(item2));
 
         recipes.add(recipe2);
         if (RecipeService.getLoot(new ArrayList<>(Arrays.asList(item1.clone(), item2.clone())), recipes).isEmpty()

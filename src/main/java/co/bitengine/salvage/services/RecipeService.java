@@ -19,7 +19,7 @@ public class RecipeService {
                 int count = isRecipeInput(recipe, new ItemStack(item));
                 if (count > 0) {
                     for (int i = 0; i < count; i++) {
-                        for (Loot loot : recipe.getOutput().getLoot()) {
+                        for (Loot loot : recipe.getOutput()) {
                             results.put(loot, results.containsKey(loot) ? results.get(loot)+1 : 1);
                         }
                     }

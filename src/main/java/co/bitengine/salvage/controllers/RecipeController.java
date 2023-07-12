@@ -57,6 +57,11 @@ public class RecipeController {
         }
     }
 
+    public void delete(Recipe recipe) {
+        cache.remove(recipe);
+        dao.delete(recipe);
+    }
+
     public Map<Loot, Integer> getPossibleLoot(List<ItemStack> input) {
         return RecipeService.getPossibleLoot(input, getCache());
     }

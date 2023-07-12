@@ -10,7 +10,6 @@ public interface IDAO<T> {
     Optional<T> get(UUID id);
     Optional<T> get(String name);
     List<T> getAll();
-    List<T> getAll(RecipeQuery recipeQuery);
     void save(T t);
     void delete(T t);
 }

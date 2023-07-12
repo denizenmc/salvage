@@ -23,7 +23,6 @@ public class LootTableServiceTest implements ISalvageTest {
     }
 
     private List<SalvageLog> testGenerate() {
-        LootTable table = new LootTable();
         Loot loot1 = new Loot(new ItemStack(Material.PAPER));
         loot1.setChance(50);
         loot1.getRange().setMin(1);
@@ -37,14 +36,10 @@ public class LootTableServiceTest implements ISalvageTest {
         loot3.getRange().setMin(2);
         loot3.getRange().setMax(5);
 
-        table.getLoot().add(loot1);
-        table.getLoot().add(loot2);
-        table.getLoot().add(loot3);
-
         boolean valid = true;
         double total = 0;
         for (int i = 0; i < 1000; i++) {
-            List<ItemStack> items = LootTableService.generate(table);
+            List<ItemStack> items = LootTableService.generate(new ArrayList<>(Arrays.asList(loot1, loot2, loot3)));
             total+=items.size();
             for (ItemStack item : items) {
                 switch (item.getType()) {

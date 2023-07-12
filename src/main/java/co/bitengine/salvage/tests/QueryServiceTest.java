@@ -47,7 +47,7 @@ public class QueryServiceTest implements ISalvageTest {
         ItemMeta meta2 = item2.getItemMeta();
         meta2.setDisplayName(ChatColor.GRAY + "Dust");
         item2.setItemMeta(meta2);
-        recipe2.getOutput().getLoot().add(new Loot(item2));
+        recipe2.getOutput().add(new Loot(item2));
 
         recipes.add(recipe2);
 

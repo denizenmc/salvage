@@ -12,6 +12,12 @@ public class Loot {
         range = new SalvageResultRange(item.getAmount(), item.getAmount());
     }
 
+    public Loot(ItemStack item, double chance, SalvageResultRange range) {
+        this.item = item;
+        this.chance = chance;
+        this.range = range;
+    }
+
     public ItemStack getItem() {
         return item;
     }

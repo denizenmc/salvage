@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Random;
 
 public class LootTableService {
-    public static List<ItemStack> generate(LootTable lootTable) {
+    public static List<ItemStack> generate(List<Loot> lootTable) {
         List<ItemStack> items = new ArrayList<>();
-        for (Loot loot : lootTable.getLoot()) {
+        for (Loot loot : lootTable) {
             double value = Utils.getRandomValue(0, 100);
             if (loot.getChance() >= value) {
                 ItemStack item = new ItemStack(loot.getItem());

@@ -8,16 +8,16 @@ public class Recipe {
     private final UUID id;
     private String name, permission;
     private final List<SalvageItem> inputs;
-    private final LootTable output;
+    private final List<Loot> output;
 
     public Recipe() {
         id = UUID.randomUUID();
         name = "New Recipe";
         permission = null;
         inputs = new ArrayList<>();
-        output = new LootTable();
+        output = new ArrayList<>();
     }
-    public Recipe(UUID id, String name, String permission, List<SalvageItem> inputs, LootTable output) {
+    public Recipe(UUID id, String name, String permission, List<SalvageItem> inputs, List<Loot> output) {
         this.id = id;
         this.name = name;
         this.permission = permission;
@@ -47,7 +47,7 @@ public class Recipe {
 
     public List<SalvageItem> getInputs() { return inputs; }
 
-    public LootTable getOutput() {
+    public List<Loot> getOutput() {
         return output;
     }
 

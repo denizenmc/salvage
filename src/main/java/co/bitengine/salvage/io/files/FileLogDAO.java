@@ -26,11 +26,6 @@ public class FileLogDAO implements IDAO<SalvageLog> {
     }
 
     @Override
-    public List<SalvageLog> getAll(RecipeQuery recipeQuery) {
-        return null;
-    }
-
-    @Override
     public void save(SalvageLog salvageLog) {
 
     }
