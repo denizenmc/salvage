@@ -3,11 +3,15 @@ package co.bitengine.salvage;
 import co.bitengine.salvage.controllers.PlayerController;
 import co.bitengine.salvage.controllers.RecipeController;
 import co.bitengine.salvage.controllers.TestController;
+import co.bitengine.salvage.guis.actions.SalvageInputAction;
+import co.bitengine.salvage.guis.actions.SalvageOutputAction;
+import co.bitengine.salvage.guis.actions.SalvageSubmitAction;
 import co.bitengine.salvage.io.DAOController;
 import co.bitengine.salvage.io.IOSource;
 import co.bitengine.salvage.logs.LogController;
 import co.bitengine.salvage.logs.SevereSalvageLog;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.denizenmc.menus.Menus;
 
 public final class Salvage extends JavaPlugin {
     private static Salvage instance;
@@ -21,6 +25,7 @@ public final class Salvage extends JavaPlugin {
         instance = this;
         initControllers();
         test();
+        initMenus();
     }
 
     @Override
@@ -41,7 +46,12 @@ public final class Salvage extends JavaPlugin {
             logController.log(new SevereSalvageLog("[TESTS FAILED] This plugin version is defective. Please report to the developer"), true);
             getServer().getPluginManager().disablePlugin(this);
         }
+    }
 
+    private void initMenus() {
+        Menus.getAPI().registerAction(new SalvageInputAction(), this);
+        Menus.getAPI().registerAction(new SalvageOutputAction(), this);
+        Menus.getAPI().registerAction(new SalvageSubmitAction(), this);
     }
 
     public static Salvage getInstance() { return instance; }

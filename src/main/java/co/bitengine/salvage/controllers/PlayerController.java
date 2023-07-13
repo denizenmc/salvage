@@ -19,11 +19,13 @@ public class PlayerController {
         cache = getAll();
     }
 
-    public Optional<SalvagePlayerData> get(Player player) {
+    public SalvagePlayerData get(Player player) {
         for (SalvagePlayerData data : getCache()) {
-            if (data.getUUID().equals(player.getUniqueId())) return Optional.of(data);
+            if (data.getUUID().equals(player.getUniqueId())) return data;
         }
-        return Optional.empty();
+        SalvagePlayerData newData = new SalvagePlayerData(player.getUniqueId(), new ArrayList<>());
+        save(newData);
+        return newData;
     }
 
     public void save(SalvagePlayerData playerData) {

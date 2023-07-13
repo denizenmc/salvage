@@ -30,4 +30,6 @@ public class Utils {
             }
         }
     }
+
+    public static String RECIPE_LIST_MENU = "salvage-recipe-list-menu";
 }
