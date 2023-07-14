@@ -27,6 +27,7 @@ public class RecipeController {
     }
 
     public List<Recipe> getCache(String search) {
+        if (search == null) return getCache();
         return QueryService.getRecipes(RecipeQuery.from(search), getCache());
     }
 

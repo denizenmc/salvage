@@ -1,6 +1,7 @@
 package co.bitengine.salvage.guis.menus;
 
 import co.bitengine.salvage.Utils;
+import co.bitengine.salvage.guis.actions.EditRecipeAction;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.denizenmc.menus.Menus;
@@ -10,8 +11,6 @@ import org.denizenmc.menus.components.Element;
 import org.denizenmc.menus.components.Menu;
 import org.denizenmc.menus.components.actions.*;
 import org.denizenmc.menus.guis.actions.CreateMenuAction;
-import org.denizenmc.menus.guis.actions.DeleteMenuAction;
-import org.denizenmc.menus.guis.actions.EditMenuAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,10 +30,11 @@ public class RecipeListMenu {
         for (int i = 0; i < menu.getRows()*9-9; i++) {
             menu.getContent().put(i,
                     new Element(Menus.getAPI().getBackgroundItemFromMaterial(Material.GRAY_STAINED_GLASS_PANE))
-                            .addAction(new EditMenuAction().setClicks(Arrays.asList(ClickType.LEFT)))
+                            .addAction(new EditRecipeAction().setClicks(Arrays.asList(ClickType.LEFT)))
                             .addAction(new ChangeMenuAction().setProperty("menu-name", MenusConfiguration.CONFIRM_DELETE_MENU).setClicks(new ArrayList<>(Arrays.asList(ClickType.SHIFT_RIGHT))))
-                            .addAction(new ChangeMenuAction().setProperty("menu-name",
-                                    MenusConfiguration.MENU_PROPERTIES_EDIT_MENU).setClicks(new ArrayList<>(Arrays.asList(ClickType.SHIFT_LEFT)))));
+                            .addAction(new TextInputAction().setProperty("placeholder-text", "")
+                                    .setProperty("title-text", "Change Recipe Name").setProperty("item-material", "NAME_TAG")
+                                    .setProperty("item-display-name", "&bFilter").setProperty("item-description", "")));
         }
         for (int i = menu.getRows()*9-9; i < menu.getRows()*9; i++) {
             menu.getContent().put(i,
