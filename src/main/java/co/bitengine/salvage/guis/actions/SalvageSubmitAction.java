@@ -57,6 +57,7 @@ public class SalvageSubmitAction extends Action {
 
     @Override
     public void onClick(Session session, int i, InventoryClickEvent inventoryClickEvent) {
+        inventoryClickEvent.setCancelled(true);
         Salvage.getInstance().getTaskController().add(new SubmitTask(session.getPlayer()));
     }
 }

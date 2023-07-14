@@ -4,6 +4,7 @@ import co.bitengine.salvage.Salvage;
 import co.bitengine.salvage.models.SalvagePlayerData;
 import co.bitengine.salvage.tasks.InputTask;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.denizenmc.menus.components.Session;
@@ -63,6 +64,10 @@ public class SalvageInputAction extends Action {
 
     @Override
     public void onClick(Session session, int i, InventoryClickEvent inventoryClickEvent) {
-        Salvage.getInstance().getTaskController().add(new InputTask(session.getPlayer(), i-1, inventoryClickEvent.getCursor() == null ? null : new ItemStack(inventoryClickEvent.getCursor())));
+        if (inventoryClickEvent.getClick().equals(ClickType.LEFT)) {
+            Salvage.getInstance().getTaskController().add(new InputTask(session.getPlayer(), i-1, inventoryClickEvent.getCursor() == null ? null : new ItemStack(inventoryClickEvent.getCursor())));
+        } else {
+            inventoryClickEvent.setCancelled(true);
+        }
     }
 }
