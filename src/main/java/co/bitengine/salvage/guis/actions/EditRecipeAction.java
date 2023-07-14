@@ -64,7 +64,9 @@ public class EditRecipeAction extends Action {
 
     @Override
     public void onBuild(Session session, int i) {
-
+        if (i == 1) {
+            session.getContext().remove(SalvageContextKeys.MODIFIABLE, Salvage.getInstance());
+        }
     }
 
     @Override

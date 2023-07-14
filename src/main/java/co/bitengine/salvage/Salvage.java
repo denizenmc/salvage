@@ -3,9 +3,9 @@ package co.bitengine.salvage;
 import co.bitengine.salvage.controllers.PlayerController;
 import co.bitengine.salvage.controllers.RecipeController;
 import co.bitengine.salvage.controllers.TestController;
-import co.bitengine.salvage.guis.actions.SalvageInputAction;
-import co.bitengine.salvage.guis.actions.SalvageOutputAction;
-import co.bitengine.salvage.guis.actions.SalvageSubmitAction;
+import co.bitengine.salvage.guis.actions.*;
+import co.bitengine.salvage.guis.menus.RecipeConfirmDeleteMenu;
+import co.bitengine.salvage.guis.menus.RecipeListMenu;
 import co.bitengine.salvage.io.DAOController;
 import co.bitengine.salvage.io.IOSource;
 import co.bitengine.salvage.logs.LogController;
@@ -57,6 +57,15 @@ public final class Salvage extends JavaPlugin {
         Menus.getAPI().registerAction(new SalvageInputAction(), this);
         Menus.getAPI().registerAction(new SalvageOutputAction(), this);
         Menus.getAPI().registerAction(new SalvageSubmitAction(), this);
+
+        Menus.getAPI().registerAction(new AddRecipeToContextAction(), this);
+        Menus.getAPI().registerAction(new CreateRecipeAction(), this);
+        Menus.getAPI().registerAction(new DeleteRecipeAction(), this);
+        Menus.getAPI().registerAction(new EditRecipeAction(), this);
+        Menus.getAPI().registerAction(new ModifyAction(), this);
+
+        if (Menus.getAPI().getMenu(Utils.RECIPE_LIST_MENU) == null) new RecipeListMenu().create();
+        if (Menus.getAPI().getMenu(Utils.RECIPE_CONFIRM_DELETE_MENU) == null) new RecipeConfirmDeleteMenu().create();
     }
 
     public static Salvage getInstance() { return instance; }

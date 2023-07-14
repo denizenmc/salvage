@@ -36,4 +36,5 @@ public class Utils {
     public static double TASK_DURATION_THRESHOLD_SECONDS = 1.5;
     public static long TASK_CONTROLLER_FREQUENCY_TICKS = 5;
     public static String RECIPE_LIST_MENU = "salvage-recipe-list-menu";
+    public static String RECIPE_CONFIRM_DELETE_MENU = "salvage-recipe-confirm-delete-menu";
 }
