@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Recipe {
+public class Recipe implements IModifiable {
     private final UUID id;
     private String name, permission;
     private final List<SalvageItem> inputs;
@@ -54,5 +54,29 @@ public class Recipe {
     @Override
     public boolean equals(Object o) {
         return o instanceof Recipe && ((Recipe) o).getId().equals(id);
+    }
+
+    @Override
+    public Object getValue(String key) {
+        switch (key) {
+            case "id":
+                return id;
+            case "name":
+                return name;
+            case "permission":
+                return permission;
+        }
+        return null;
+    }
+
+    @Override
+    public void setValue(String key, Object o) {
+        switch (key) {
+            case "name":
+                if (o instanceof String) name = (String) o;
+                break;
+            case "permission":
+                if (o instanceof String) permission = (String) o;
+        }
     }
 }

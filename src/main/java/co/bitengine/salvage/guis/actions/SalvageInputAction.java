@@ -2,6 +2,7 @@ package co.bitengine.salvage.guis.actions;
 
 import co.bitengine.salvage.Salvage;
 import co.bitengine.salvage.models.SalvagePlayerData;
+import co.bitengine.salvage.tasks.InputTask;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -62,14 +63,6 @@ public class SalvageInputAction extends Action {
 
     @Override
     public void onClick(Session session, int i, InventoryClickEvent inventoryClickEvent) {
-        SalvagePlayerData data = Salvage.getInstance().getPlayerController().get(session.getPlayer());
-        if (!data.getInput().isEmpty() && i <= data.getInput().size()) {
-            data.getInput().remove(i-1);
-        }
-        if (inventoryClickEvent.getCursor() != null && inventoryClickEvent.getCursor().getType() != Material.AIR) {
-            data.getInput().add(new ItemStack(inventoryClickEvent.getCursor()));
-        }
-        Salvage.getInstance().getPlayerController().save(data);
-        session.refresh();
+        Salvage.getInstance().getTaskController().add(new InputTask(session.getPlayer(), i-1, inventoryClickEvent.getCursor() == null ? null : new ItemStack(inventoryClickEvent.getCursor())));
     }
 }

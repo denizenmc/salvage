@@ -3,6 +3,7 @@ package co.bitengine.salvage.controllers;
 import co.bitengine.salvage.Salvage;
 import co.bitengine.salvage.io.IDAO;
 import co.bitengine.salvage.logs.SevereSalvageLog;
+import co.bitengine.salvage.models.IModifiable;
 import co.bitengine.salvage.models.Loot;
 import co.bitengine.salvage.models.Recipe;
 import co.bitengine.salvage.models.RecipeQuery;
@@ -45,6 +46,12 @@ public class RecipeController {
             return Optional.empty();
         }
         return dao.get(id);
+    }
+
+    public void save(IModifiable iModifiable) {
+        if (iModifiable instanceof  Recipe) {
+            save((Recipe) iModifiable);
+        }
     }
 
     public void save(Recipe recipe) {

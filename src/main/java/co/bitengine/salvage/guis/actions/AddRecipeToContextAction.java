@@ -4,18 +4,15 @@ import co.bitengine.salvage.Salvage;
 import co.bitengine.salvage.Utils;
 import co.bitengine.salvage.guis.SalvageContextKeys;
 import co.bitengine.salvage.models.Recipe;
-import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.denizenmc.menus.Menus;
-import org.denizenmc.menus.MenusUtils;
 import org.denizenmc.menus.components.Session;
 import org.denizenmc.menus.components.actions.Action;
 
 import java.util.*;
 
-public class EditRecipeAction extends Action {
+public class AddRecipeToContextAction extends Action {
     @Override
     public boolean isHidden() {
         return true;
@@ -23,12 +20,12 @@ public class EditRecipeAction extends Action {
 
     @Override
     public String getName() {
-        return "salvage-edit-recipe";
+        return "salvage-add-recipe-to-context";
     }
 
     @Override
     public List<String> getDescription() {
-        return new ArrayList<>(Arrays.asList("&fSalvage edit model"));
+        return new ArrayList<>(Arrays.asList("&fSalvage add recipe model to context"));
     }
 
     @Override
@@ -43,22 +40,16 @@ public class EditRecipeAction extends Action {
 
     @Override
     public Action copy() {
-        return new EditRecipeAction();
+        return new AddRecipeToContextAction();
     }
 
     @Override
     public boolean isDynamicIcon() {
-        return true;
+        return false;
     }
 
     @Override
     public ItemStack getDynamicIcon(Session session, int i) {
-        String search = session.getContext().getValue("menus-text-input", Menus.getInstance()) instanceof String ?
-                (String) session.getContext().getValue("menus-text-input", Menus.getInstance()) : null;
-        int paginatedCount = (session.getPage()-1)*session.getMenu().getTotal(this)+i;
-        if (paginatedCount <= Salvage.getInstance().getRecipeController().getCache(search).size()) {
-            return getRecipeItem(Salvage.getInstance().getRecipeController().getCache(search).get(paginatedCount-1));
-        }
         return null;
     }
 
@@ -69,16 +60,12 @@ public class EditRecipeAction extends Action {
 
     @Override
     public void onClick(Session session, int i, InventoryClickEvent inventoryClickEvent) {
-
-    }
-
-    private ItemStack getRecipeItem(Recipe recipe) {
-        ItemStack item = MenusUtils.getHead(Utils.RECIPE_ICON_HEAD);
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ChatColor.YELLOW + recipe.getName());
-
+        inventoryClickEvent.setCancelled(true);
+        String search = session.getContext().getValue("menus-text-input", Menus.getInstance()) instanceof String ?
+                (String) session.getContext().getValue("menus-text-input", Menus.getInstance()) : null;
+        int paginatedCount = (session.getPage()-1)*session.getMenu().getTotal(this)+i;
+        if (paginatedCount <= Salvage.getInstance().getRecipeController().getCache(search).size()) {
+            session.getContext().setValue(SalvageContextKeys.MODIFIABLE, Salvage.getInstance(), Salvage.getInstance().getRecipeController().getCache(search).get(paginatedCount-1));
         }
-        return item;
     }
 }

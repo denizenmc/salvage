@@ -31,5 +31,9 @@ public class Utils {
         }
     }
 
+
+    public static String RECIPE_ICON_HEAD = "Abolish_exe";
+    public static double TASK_DURATION_THRESHOLD_SECONDS = 1.5;
+    public static long TASK_CONTROLLER_FREQUENCY_TICKS = 5;
     public static String RECIPE_LIST_MENU = "salvage-recipe-list-menu";
 }

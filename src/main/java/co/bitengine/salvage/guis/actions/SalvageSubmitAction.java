@@ -1,8 +1,7 @@
 package co.bitengine.salvage.guis.actions;
 
 import co.bitengine.salvage.Salvage;
-import co.bitengine.salvage.Utils;
-import co.bitengine.salvage.models.SalvagePlayerData;
+import co.bitengine.salvage.tasks.SubmitTask;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.denizenmc.menus.components.Session;
@@ -58,11 +57,6 @@ public class SalvageSubmitAction extends Action {
 
     @Override
     public void onClick(Session session, int i, InventoryClickEvent inventoryClickEvent) {
-        SalvagePlayerData data = Salvage.getInstance().getPlayerController().get(session.getPlayer());
-        Utils.giveItems(session.getPlayer(), Salvage.getInstance().getRecipeController().getLoot(data.getInput()));
-        Utils.giveItems(session.getPlayer(), data.getInput());
-        data.getInput().clear();
-        Salvage.getInstance().getPlayerController().save(data);
-        session.refresh();
+        Salvage.getInstance().getTaskController().add(new SubmitTask(session.getPlayer()));
     }
 }

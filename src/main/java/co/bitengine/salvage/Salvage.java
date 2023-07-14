@@ -10,6 +10,7 @@ import co.bitengine.salvage.io.DAOController;
 import co.bitengine.salvage.io.IOSource;
 import co.bitengine.salvage.logs.LogController;
 import co.bitengine.salvage.logs.SevereSalvageLog;
+import co.bitengine.salvage.tasks.TaskController;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.denizenmc.menus.Menus;
 
@@ -19,6 +20,7 @@ public final class Salvage extends JavaPlugin {
     private LogController logController;
     private RecipeController recipeController;
     private PlayerController playerController;
+    private TaskController taskController;
 
     @Override
     public void onEnable() {
@@ -36,6 +38,9 @@ public final class Salvage extends JavaPlugin {
         logController = new LogController();
         recipeController = new RecipeController();
         playerController = new PlayerController();
+
+        taskController = new TaskController();
+        taskController.runTaskTimerAsynchronously(this, 0, Utils.TASK_CONTROLLER_FREQUENCY_TICKS);
     }
 
     private void test() {
@@ -57,8 +62,7 @@ public final class Salvage extends JavaPlugin {
     public static Salvage getInstance() { return instance; }
     public DAOController getDAOController() { return daoController; }
     public LogController getLogController() { return logController; }
-
     public RecipeController getRecipeController() { return recipeController; }
-
     public PlayerController getPlayerController() { return playerController; }
+    public TaskController getTaskController() { return taskController; }
 }

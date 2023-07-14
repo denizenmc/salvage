@@ -1,7 +1,9 @@
 package co.bitengine.salvage.guis.menus;
 
 import co.bitengine.salvage.Utils;
+import co.bitengine.salvage.guis.actions.AddRecipeToContextAction;
 import co.bitengine.salvage.guis.actions.EditRecipeAction;
+import co.bitengine.salvage.guis.actions.ModifyAction;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.denizenmc.menus.Menus;
@@ -9,10 +11,11 @@ import org.denizenmc.menus.MenusConfiguration;
 import org.denizenmc.menus.MenusUtils;
 import org.denizenmc.menus.components.Element;
 import org.denizenmc.menus.components.Menu;
-import org.denizenmc.menus.components.actions.*;
+import org.denizenmc.menus.components.actions.NextPageAction;
+import org.denizenmc.menus.components.actions.PreviousPageAction;
+import org.denizenmc.menus.components.actions.TextInputAction;
 import org.denizenmc.menus.guis.actions.CreateMenuAction;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RecipeListMenu {
@@ -21,8 +24,8 @@ public class RecipeListMenu {
                 .setTitle("Salvage Recipes")
                 .setCollection("Salvage")
                 .setRefreshRateSeconds(20);
-        menu.setCanOpenDirectly(true);
-        menu.setHidden(false);
+        menu.setCanOpenDirectly(false);
+        menu.setHidden(true);
         setContent(menu);
     }
 
@@ -30,19 +33,18 @@ public class RecipeListMenu {
         for (int i = 0; i < menu.getRows()*9-9; i++) {
             menu.getContent().put(i,
                     new Element(Menus.getAPI().getBackgroundItemFromMaterial(Material.GRAY_STAINED_GLASS_PANE))
+                            .addAction(new AddRecipeToContextAction().setClicks(Arrays.asList(ClickType.LEFT, ClickType.SHIFT_LEFT, ClickType.RIGHT)))
                             .addAction(new EditRecipeAction().setClicks(Arrays.asList(ClickType.LEFT)))
-                            .addAction(new ChangeMenuAction().setProperty("menu-name", MenusConfiguration.CONFIRM_DELETE_MENU).setClicks(new ArrayList<>(Arrays.asList(ClickType.SHIFT_RIGHT))))
-                            .addAction(new TextInputAction().setProperty("placeholder-text", "")
-                                    .setProperty("title-text", "Change Recipe Name").setProperty("item-material", "NAME_TAG")
-                                    .setProperty("item-display-name", "&bFilter").setProperty("item-description", "")));
+                            .addAction(new ModifyAction().setProperty("key", "name").setClicks(Arrays.asList(ClickType.SHIFT_LEFT)))
+                            .addAction(new ModifyAction().setProperty("key", "permission").setClicks(Arrays.asList(ClickType.RIGHT))));
         }
         for (int i = menu.getRows()*9-9; i < menu.getRows()*9; i++) {
             menu.getContent().put(i,
                     new Element(Menus.getAPI().getBackgroundItemFromMaterial(Material.GRAY_STAINED_GLASS_PANE)));
         }
         menu.getContent().put(menu.getRows()*9-5,
-                new Element(MenusUtils.getHead(MenusConfiguration.MENUS_PLAYER_HEAD),
-                        "&b&lCreate Menu", Arrays.asList("&fCreate a new menu", "", "&eClick Here"))
+                new Element(MenusUtils.getHead(Utils.RECIPE_ICON_HEAD),
+                        "&b&lCreate Recipe", Arrays.asList("&fCreate a new recipe", "", "&eClick Here"))
                         .addAction(new CreateMenuAction()).addAction(new TextInputAction().setProperty("placeholder-text", "Enter unique name...")
                                 .setProperty("title-text", "Create Menu").setProperty("item-material", "NAME_TAG")
                                 .setProperty("item-display-name", "&bCreate Menu").setProperty("item-description", "")));
@@ -54,10 +56,6 @@ public class RecipeListMenu {
                 new Element(MenusUtils.getHead(MenusConfiguration.NEXT_PAGE_PLAYER_HEAD),
                         "&bNext Page", Arrays.asList("&fCurrent Page: &7(%menus_page%)", "", "&eClick Here"))
                         .addAction(new NextPageAction()));
-        menu.getContent().put(menu.getRows()*9-9,
-                new Element(MenusUtils.getHead(MenusConfiguration.BACK_PLAYER_HEAD),
-                        "&bGo Back", Arrays.asList("", "&eClick Here"))
-                        .addAction(new BackAction()));
         menu.getContent().put(menu.getRows()*9-1,
                 new Element(MenusUtils.getHead(MenusConfiguration.TEXT_INPUT_PLAYER_HEAD),
                         "&bFilter", Arrays.asList("&fUse 'collection=' or 'name='","","&eCurrent Filter", "&f%menus_text%",
