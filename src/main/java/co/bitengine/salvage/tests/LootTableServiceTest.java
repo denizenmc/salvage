@@ -26,7 +26,7 @@ public class LootTableServiceTest implements ISalvageTest {
         Loot loot1 = new Loot(new ItemStack(Material.PAPER));
         loot1.setChance(50);
         loot1.getRange().setMin(1);
-        loot1.getRange().setMin(6);
+        loot1.getRange().setMax(6);
         Loot loot2 = new Loot(new ItemStack(Material.FIRE_CHARGE));
         loot2.setChance(75);
         loot2.getRange().setMin(3);

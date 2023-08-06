@@ -16,7 +16,7 @@ public class InfoSalvageLog extends SalvageLog {
     }
 
     @Override
-    String getConsoleText() {
+    public String getConsoleText() {
         return "[Salvage] " + text;
     }
 

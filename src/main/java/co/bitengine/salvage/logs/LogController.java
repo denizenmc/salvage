@@ -16,7 +16,7 @@ public class LogController {
 
     public void log(SalvageLog log, boolean logToConsole) {
        Optional<IDAO<SalvageLog>> DAO = Salvage.getInstance().getDAOController().getLogDAO();
-       DAO.ifPresent(salvageLogIDAO -> salvageLogIDAO.save(log));
+       //DAO.ifPresent(salvageLogIDAO -> salvageLogIDAO.save(log));
        if (logToConsole) Bukkit.getLogger().log(log.getLevel(), log.getText());
     }
 

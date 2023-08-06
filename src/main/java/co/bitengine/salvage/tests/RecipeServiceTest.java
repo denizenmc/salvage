@@ -42,7 +42,8 @@ public class RecipeServiceTest implements ISalvageTest {
         ItemMeta meta2 = item2.getItemMeta();
         meta2.setDisplayName(ChatColor.GRAY + "Dust");
         item2.setItemMeta(meta2);
-        recipe2.getOutput().add(new Loot(item2));
+        recipe2.getInputs().add(new SalvageItem(item2));
+        recipe2.getOutput().add(new Loot(item1));
 
         recipes.add(recipe2);
 

@@ -104,6 +104,7 @@ public class FileRecipeDAO implements IDAO<Recipe> {
 
     private List<SalvageItem> getSalvageItemsFromRecipeConfiguration(FileConfiguration configuration) {
         List<SalvageItem> items = new ArrayList<>();
+        if (configuration.getConfigurationSection("input") == null) return items;
         for (String input : configuration.getConfigurationSection("input").getValues(false).keySet()) {
             if (configuration.getItemStack("input."+input+".item") == null) continue;
             ItemStack item = configuration.getItemStack("input."+input+".item");
@@ -116,6 +117,7 @@ public class FileRecipeDAO implements IDAO<Recipe> {
 
     private List<Loot> getLootTableFromRecipeConfiguration(FileConfiguration configuration) {
         List<Loot> items = new ArrayList<>();
+        if (configuration.getConfigurationSection("output") == null) return items;
         for (String output : configuration.getConfigurationSection("output").getValues(false).keySet()) {
             if (configuration.getItemStack("output."+output+".item") == null) continue;
             ItemStack item = configuration.getItemStack("output."+output+".item");

@@ -71,15 +71,33 @@ public class EditRecipeAction extends Action {
 
     @Override
     public void onClick(Session session, int i, InventoryClickEvent inventoryClickEvent) {
-
+        inventoryClickEvent.setCancelled(true);
+        String search = session.getContext().getValue("menus-text-input", Menus.getInstance()) instanceof String ?
+                (String) session.getContext().getValue("menus-text-input", Menus.getInstance()) : null;
+        int paginatedCount = (session.getPage()-1)*session.getMenu().getTotal(this)+i;
+        if (paginatedCount <= Salvage.getInstance().getRecipeController().getCache(search).size()) {
+            session.push(Menus.getAPI().getMenu(Utils.RECIPE_EDIT_MENU));
+            session.open();
+        }
     }
 
     private ItemStack getRecipeItem(Recipe recipe) {
         ItemStack item = MenusUtils.getHead(Utils.RECIPE_ICON_HEAD);
         ItemMeta meta = item.getItemMeta();
+        List<String> lore = new ArrayList<>();
         if (meta != null) {
             meta.setDisplayName(ChatColor.YELLOW + recipe.getName());
-
+            lore.add("");
+            lore.add(ChatColor.WHITE + "Permission: " + ChatColor.GRAY + (recipe.getPermission() == null ? "None" : recipe.getPermission()));
+            lore.add(ChatColor.WHITE + "Possible Input Items: " + ChatColor.GRAY + recipe.getInputs().size());
+            lore.add(ChatColor.WHITE + "Possible Output Items: " + ChatColor.GRAY + recipe.getOutput().size());
+            lore.add("");
+            lore.add(ChatColor.GOLD + "Left-Click: " + ChatColor.YELLOW + "Edit Items");
+            lore.add(ChatColor.GOLD + "Shift-Left-Click: " + ChatColor.YELLOW + "Edit Name");
+            lore.add(ChatColor.GOLD + "Right-Click: " + ChatColor.YELLOW + "Edit Permission");
+            lore.add(ChatColor.GOLD + "Shift-Right-Click: " + ChatColor.RED + "Remove");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
         }
         return item;
     }

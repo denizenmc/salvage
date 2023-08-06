@@ -10,7 +10,7 @@ public class SaveTask extends SalvageTask {
     private SalvagePlayerData data;
     private boolean started, complete;
 
-    public SaveTask(SalvagePlayerData data){
+    public SaveTask(SalvagePlayerData data) {
         super(System.currentTimeMillis());
         this.data = data; started = false; complete = false;  }
 

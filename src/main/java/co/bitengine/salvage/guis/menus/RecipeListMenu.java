@@ -24,7 +24,7 @@ public class RecipeListMenu {
         Menu menu = Menus.getAPI().createEmptyMenu(Utils.RECIPE_LIST_MENU, 6)
                 .setTitle("Salvage Recipes")
                 .setCollection("Salvage")
-                .setRefreshRateSeconds(20);
+                .setRefreshRateTicks(400);
         menu.setCanOpenDirectly(false);
         menu.setHidden(false);
         setContent(menu);
@@ -37,8 +37,8 @@ public class RecipeListMenu {
                             .addAction(new AddRecipeToContextAction().setClicks(Arrays.asList(ClickType.LEFT, ClickType.SHIFT_LEFT, ClickType.RIGHT, ClickType.SHIFT_RIGHT)))
                             .addAction(new EditRecipeAction().setClicks(Arrays.asList(ClickType.LEFT)))
                             .addAction(new ModifyAction().setProperty("key", "name").setClicks(Arrays.asList(ClickType.SHIFT_LEFT)))
-                            .addAction(new ModifyAction().setProperty("key", "permission").setClicks(Arrays.asList(ClickType.RIGHT))))
-                            .addAction(new ChangeMenuAction().setProperty("menu-name", Utils.RECIPE_CONFIRM_DELETE_MENU).setClicks(Arrays.asList(ClickType.SHIFT_RIGHT)));
+                            .addAction(new ModifyAction().setProperty("key", "permission").setClicks(Arrays.asList(ClickType.RIGHT)))
+                            .addAction(new ChangeMenuAction().setProperty("menu-name", Utils.RECIPE_CONFIRM_DELETE_MENU).setClicks(Arrays.asList(ClickType.SHIFT_RIGHT))));
         }
         for (int i = menu.getRows()*9-9; i < menu.getRows()*9; i++) {
             menu.getContent().put(i,
@@ -59,8 +59,8 @@ public class RecipeListMenu {
                         .addAction(new NextPageAction()));
         menu.getContent().put(menu.getRows()*9-1,
                 new Element(MenusUtils.getHead(MenusConfiguration.TEXT_INPUT_PLAYER_HEAD),
-                        "&bFilter", Arrays.asList("&fUse 'collection=' or 'name='","","&eCurrent Filter", "&f%menus_text%",
-                        "", "&eExample", "&fcollection=Menus", "", "&eLeft-Click: &fEdit", "&eShift-Right-Click: &cClear"))
+                        "&bFilter", Arrays.asList("&fAvailable parameters:","&7>> &ename","&7>> &epermission","&7>> &einput","&7>> &eoutput","", "&eCurrent Filter", "&f%menus_text%",
+                        "", "&eExample", "&fname=Test&permission=player.permission&input=Best Sword,Great Axe", "", "&eLeft-Click: &fEdit", "&eShift-Right-Click: &cClear"))
                         .addAction(new TextInputAction().setProperty("placeholder-text", "Search...")
                                 .setProperty("title-text", "Filter").setProperty("item-material", "PAPER")
                                 .setProperty("item-display-name", "&bFilter").setProperty("item-description", "")));

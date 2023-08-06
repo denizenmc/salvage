@@ -51,11 +51,13 @@ public class SalvageOutputAction extends Action {
 
     @Override
     public ItemStack getDynamicIcon(Session session, int i) {
-        if (!(session.getContext().getValue(SalvageContextKeys.LOADED_POSSIBLE_LOOT, Salvage.getInstance()) instanceof Set)) return null;
-        List<Loot> loot = getLootFromSet((Set) session.getContext().getValue(SalvageContextKeys.LOADED_POSSIBLE_LOOT, Salvage.getInstance()));
+        if (!(session.getContext().getValue(SalvageContextKeys.LOADED_POSSIBLE_LOOT, Salvage.getInstance()) instanceof Map)) return null;
+        Map<Loot, Integer> loot = (Map) session.getContext().getValue(SalvageContextKeys.LOADED_POSSIBLE_LOOT, Salvage.getInstance());
+        if (loot == null) return null;
+        List<Loot> ordered = getLootFromMap(loot);
         int paginatedCount = (session.getPage()-1)*session.getMenu().getTotal(this)+i;
-        if (paginatedCount <= loot.size()) {
-            return getLootItem(loot.get(paginatedCount-1));
+        if (paginatedCount <= ordered.size()) {
+            return getLootItem(ordered.get(paginatedCount-1), loot.get(ordered.get(paginatedCount-1)));
         }
         return null;
     }
@@ -63,9 +65,8 @@ public class SalvageOutputAction extends Action {
     @Override
     public void onBuild(Session session, int i) {
         if (i == 1) {
-            SalvagePlayerData data = Salvage.getInstance().getPlayerController().get(session.getPlayer());
-            Map<Loot, Integer> possibleLoot = Salvage.getInstance().getRecipeController().getPossibleLoot(data.getInput());
-            session.getContext().setValue(SalvageContextKeys.LOADED_POSSIBLE_LOOT, Salvage.getInstance(), possibleLoot.keySet());
+            Map<Loot, Integer> possibleLoot = Salvage.getInstance().getRecipeController().getPossibleLoot(session.getInput());
+            session.getContext().setValue(SalvageContextKeys.LOADED_POSSIBLE_LOOT, Salvage.getInstance(), possibleLoot);
         }
     }
 
@@ -74,19 +75,21 @@ public class SalvageOutputAction extends Action {
         inventoryClickEvent.setCancelled(true);
     }
 
-    private List<Loot> getLootFromSet(Set set) {
+    private List<Loot> getLootFromMap(Map map) {
         List<Loot> loot = new ArrayList<>();
-        for (Object o : set) {
+        for (Object o : map.keySet()) {
             if (o instanceof Loot) loot.add((Loot) o);
         }
+        Collections.sort(loot);
         return loot;
     }
 
-    private ItemStack getLootItem(Loot loot) {
+    private ItemStack getLootItem(Loot loot, int count) {
         ItemStack item = new ItemStack(loot.getItem());
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+            List<String> lore = meta.hasLore() ? new ArrayList<>(meta.getLore()) : new ArrayList<>();
+            lore.add(ChatColor.YELLOW + "Count: " + ChatColor.GOLD + "(x" + count + ")");
             lore.add("");
             lore.add(ChatColor.YELLOW + "Chance: " + ChatColor.WHITE + loot.getChance() + "%");
             lore.add(ChatColor.YELLOW + "Min Amount: " + ChatColor.GRAY + loot.getRange().getMin());

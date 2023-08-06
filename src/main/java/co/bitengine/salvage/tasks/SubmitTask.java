@@ -2,18 +2,16 @@ package co.bitengine.salvage.tasks;
 
 import co.bitengine.salvage.Salvage;
 import co.bitengine.salvage.Utils;
-import co.bitengine.salvage.models.SalvagePlayerData;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.denizenmc.menus.Menus;
+import org.denizenmc.menus.components.Session;
 
 public class SubmitTask extends SalvageTask {
-    private Player player;
+    private Session session;
     private boolean started, complete;
 
-    public SubmitTask(Player player) {
+    public SubmitTask(Session session) {
         super(System.currentTimeMillis());
-        this.player = player; started = false; complete = false; }
+        this.session = session; started = false; complete = false; }
 
     @Override
     boolean isSync() {
@@ -33,21 +31,20 @@ public class SubmitTask extends SalvageTask {
     @Override
     public boolean equals(Object o) {
         return o instanceof SubmitTask &&
-                ((SubmitTask) o).player != null && player != null && ((SubmitTask) o).player.getUniqueId().equals(player.getUniqueId());
+                ((SubmitTask) o).session.getPlayer() != null && session.getPlayer() != null && ((SubmitTask) o).session.getPlayer().getUniqueId().equals(session.getPlayer().getUniqueId());
     }
 
     @Override
     public void run() {
         started = true;
-        if (player == null || !Bukkit.getOnlinePlayers().contains(player)) {
+        if (session.getPlayer() == null || !Bukkit.getOnlinePlayers().contains(session.getPlayer())) {
             complete = true;
             return;
         }
-        SalvagePlayerData data = Salvage.getInstance().getPlayerController().get(player);
-        Utils.giveItems(player, Salvage.getInstance().getRecipeController().getLoot(data.getInput()));
-        Utils.giveItems(player, data.getInput());
-        data.getInput().clear();
-        Salvage.getInstance().getTaskController().add(new SaveTask(data));
+        Utils.giveItems(session.getPlayer(), Salvage.getInstance().getRecipeController().getLoot(session.getInput()));
+        Utils.giveItems(session.getPlayer(), session.getInput());
+        session.getInput().clear();
+        session.clearInput();
         complete = true;
     }
 }

@@ -1,5 +1,8 @@
 package co.bitengine.salvage.models;
 
+import co.bitengine.salvage.Salvage;
+import co.bitengine.salvage.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -66,6 +69,10 @@ public class Recipe implements IModifiable {
             case "permission":
                 return permission;
         }
+        if (key.contains("input") && key.split("-").length > 1) {
+            int index = Utils.getIntFromString(key.split("-")[1]);
+            if (index < inputs.size()) return inputs.get(index);
+        }
         return null;
     }
 
@@ -77,6 +84,20 @@ public class Recipe implements IModifiable {
                 break;
             case "permission":
                 if (o instanceof String) permission = (String) o;
+                break;
+        }
+        if (key.contains("input") && key.split("-").length > 1) {
+            int index = Utils.getIntFromString(key.split("-")[1]);
+            if (index < inputs.size() && o instanceof String) {
+                inputs.get(index).getLoreLinesToMatch().add((String) o);
+            }
+        } else if (key.contains("output") && key.split("-").length > 2) {
+            int index = Utils.getIntFromString(key.split("-")[1]);
+            if (index < output.size() && o instanceof String) {
+                if (key.contains("chance")) output.get(index).setChance(Utils.getDoubleFromString((String) o));
+                else if (key.contains("min")) output.get(index).getRange().setMin(Utils.getIntFromString((String) o));
+                else if (key.contains("max")) output.get(index).getRange().setMax(Utils.getIntFromString((String) o));
+            }
         }
     }
 }

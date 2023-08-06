@@ -2,7 +2,7 @@ package co.bitengine.salvage.models;
 
 import org.bukkit.inventory.ItemStack;
 
-public class Loot {
+public class Loot implements Comparable<Loot> {
     private final ItemStack item;
     private double chance;
     private final SalvageResultRange range;
@@ -37,5 +37,10 @@ public class Loot {
     @Override
     public boolean equals(Object o) {
         return o instanceof Loot && ((Loot) o).getItem().equals(item) && ((Loot) o).getChance() == chance;
+    }
+
+    @Override
+    public int compareTo(Loot o) {
+        return item.getType().toString().compareTo(o.getItem().getType().toString());
     }
 }

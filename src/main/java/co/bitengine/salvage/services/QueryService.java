@@ -24,7 +24,7 @@ public class QueryService {
             }
             if (query.getPermission() != null) {
                 if (recipe.getPermission() == null) canAdd = false;
-                if (!recipe.getPermission().contains(query.getPermission())) canAdd = false;
+                else if (!recipe.getPermission().contains(query.getPermission())) canAdd = false;
             }
             if (!query.getSalvageItemTexts().isEmpty()) {
                 Set<String> found = new HashSet<>();

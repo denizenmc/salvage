@@ -3,5 +3,8 @@ version: '${project.version}'
 main: co.bitengine.salvage.Salvage
 api-version: 1.13
 authors: [ Denizen ]
-description: Ultimate salvage plugin — create unlimted custom recipes to break items down into other items.
+description: Ultimate salvage plugin — create unlimited custom recipes to break items down into other items.
 depend: [Menus]
+commands:
+  salvage:
+    description: Root command for all salvage operations.

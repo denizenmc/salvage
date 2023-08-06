@@ -2,6 +2,7 @@ package co.bitengine.salvage.guis.menus;
 
 import co.bitengine.salvage.Utils;
 import co.bitengine.salvage.guis.actions.DeleteRecipeAction;
+import org.bukkit.Material;
 import org.denizenmc.menus.Menus;
 import org.denizenmc.menus.MenusConfiguration;
 import org.denizenmc.menus.MenusUtils;
@@ -13,10 +14,10 @@ import java.util.Arrays;
 
 public class RecipeConfirmDeleteMenu {
     public void create() {
-        Menu menu = Menus.getAPI().createEmptyMenu(Utils.RECIPE_CONFIRM_DELETE_MENU, 3)
+        Menu menu = Menus.getAPI().createMenuWithBackground(Utils.RECIPE_CONFIRM_DELETE_MENU, Menus.getAPI().getBackgroundItemFromMaterial(Material.GRAY_STAINED_GLASS_PANE), 3)
                 .setTitle("Delete Recipe")
                 .setCollection("Salvage")
-                .setRefreshRateSeconds(200);
+                .setRefreshRateTicks(4000);
         menu.setCanOpenDirectly(false);
         menu.setHidden(false);
         setContent(menu);

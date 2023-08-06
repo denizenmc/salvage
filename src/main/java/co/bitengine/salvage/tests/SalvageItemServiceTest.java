@@ -29,12 +29,12 @@ public class SalvageItemServiceTest implements ISalvageTest {
         item1.setItemMeta(meta1);
         SalvageItem salvageItem = new SalvageItem(item1);
         salvageItem.setMatchDisplayName(true);
-        salvageItem.getLoreLinesToMatch().add("None Compare");
+        salvageItem.getLoreLinesToMatch().add("&eNone Compare");
 
         ItemStack item2 = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta meta2 = item2.getItemMeta();
         meta2.setDisplayName(ChatColor.GRAY + "Dust");
-        meta1.setLore(Arrays.asList(ChatColor.GRAY + "The best sword in the land", ChatColor.YELLOW + "None Compare"));
+        meta2.setLore(Arrays.asList(ChatColor.GRAY + "The best sword in the land", ChatColor.YELLOW + "None Compare"));
         item2.setItemMeta(meta2);
 
         if (SalvageItemService.isItem(salvageItem, item2)) logs.add(new SevereSalvageLog("[TEST FAILED] Salvage item match 1"));
